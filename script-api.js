@@ -47,7 +47,7 @@ function toPrint(data) {
     saveQuestion[index].push(saveQuestionCorrect[index]);
   });
 
-  var lista = [0, 1, 2, 3];
+   lista = [0, 1, 2, 3];
   lista = lista.sort(function () {
     return Math.random() - 0.5;
   });
@@ -65,15 +65,13 @@ function toPrint(data) {
                                      <div class="card h-100">
                                        <div class="card-body">
                                          <p class="card-text">${element.question}</p> 
-                                         <form action="/action_page.php name="nombreform" class='formQuestion' id='formAnswers'">
+                                         <form action="/action_page.php name="gender" class='formQuestion' id='formAnswers'">
                                          <input type="radio" id="male" name="gender" value="${saveQuestion[index][num]}">
                                          <label for="male">${saveQuestion[index][num]}</label><br>
                                          <input type="radio" id="male" name="gender" value="${saveQuestion[index][num2]}">
                                          <label for="male">${saveQuestion[index][num2]}</label><br>
-                                         <form action="/action_page.php">
                                          <input type="radio" id="male" name="gender" value="${saveQuestion[index][num3]}">
                                          <label for="male">${saveQuestion[index][num3]}</label><br>
-                                         <form action="/action_page.php">
                                          <input type="radio" id="male" name="gender" value="${saveQuestion[index][num4]}">
                                          <label for="male">${saveQuestion[index][num4]}</label><br>
                                          
@@ -121,7 +119,7 @@ function toPrintSegundo(data) {
                                      <div class="card h-100">
                                        <div class="card-body">
                                          <p class="card-text">${element.question}</p> 
-                                         <form action="/action_page.php id='formAnswers'">
+                                         <form action="/action_page.php id='formAnswers">
                                          <input type="radio" id="male" name="gender" value="${saveQuestion[index][num]}">
                                          <label for="male">${saveQuestion[index][num]}</label><br>
                                          <input type="radio" id="male" name="gender" value="${saveQuestion[index][num2]}">
@@ -134,22 +132,41 @@ function toPrintSegundo(data) {
   printButton();
   
 }
-
-
-function comparison(data){
+function comparisonOptionMultiple(data){
   saveQuestionCorrect = [];
-  let resul = 0;
+  resul = 0;
   let printResult = document.getElementById('resulQuestion');
   printResult.innerHTML = '';
   for (let index = 0; index < saveQuestion.length; index++) {
     if (data[index] === saveQuestion[index][3]) {
       saveQuestionCorrect.push(saveQuestion[index][3])
     } 
+ }
+}
+
+function comparisonOptionFalseTrue(data){
+  saveQuestionCorrect = [];
+  resul = 0;
+  let printResult = document.getElementById('resulQuestion');
+  printResult.innerHTML = '';
+  for (let index = 0; index < saveQuestion.length; index++) {
     if (data[index] === saveQuestion[index][1]) {
       saveQuestionCorrect.push(saveQuestion[index][1])
     } 
+ }
+
+}
+
+function comparison(data){
+  const getType = document.getElementById("typeQuestion").value;
+  if (getType === 'multiple') {
+    comparisonOptionMultiple(data);
+  }else{
+    comparisonOptionFalseTrue(data);
   }
+  
   resul = (10/saveQuestion.length)*saveQuestionCorrect.length;
+  
 
   if (resul >= 6) {
     printResult.innerHTML += `<div class="card">
@@ -172,7 +189,7 @@ function comparison(data){
 } 
 
 function getAnswersQuestion() {
-  var saveCorrect = [];
+  let saveCorrect = [];
   let marcada = document.querySelectorAll('#male'); 
   for (let index = 0; index < marcada.length; index++) {
     if (marcada[index].checked) {
